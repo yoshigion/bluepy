@@ -36,8 +36,8 @@ def dump_services(dev):
             if 'READ' in props:
                 val = c.read()
                 if c.uuid == btle.AssignedNumbers.device_name:
-                    string = ANSI_CYAN + '\'' + \
-                        val.decode('utf-8') + '\'' + ANSI_OFF
+                    string = '\'' + \
+                        val.decode('utf-8') + '\''
                 elif c.uuid == btle.AssignedNumbers.device_information:
                     string = repr(val)
                 else:
@@ -81,14 +81,14 @@ class ScanPrint(btle.DefaultDelegate):
 
         print ('    Device (%s): %s (%s), %d dBm %s' %
                (status,
-                   ANSI_WHITE + dev.addr + ANSI_OFF,
+                   dev.addr,
                    dev.addrType,
                    dev.rssi,
                    ('' if dev.connectable else '(not connectable)'))
                )
         for (sdid, desc, val) in dev.getScanData():
             if sdid in [8, 9]:
-                print ('\t' + desc + ': \'' + ANSI_CYAN + val + ANSI_OFF + '\'')
+                print ('\t' + desc + ': \'' + val + '\'')
             else:
                 print ('\t' + desc + ': <' + val + '>')
         if not dev.scanData:
@@ -118,11 +118,11 @@ def main():
 
     scanner = btle.Scanner(arg.hci).withDelegate(ScanPrint(arg))
 
-    print (ANSI_RED + "Scanning for devices..." + ANSI_OFF)
+    print ("Scanning for devices...")
     devices = scanner.scan(arg.timeout)
 
     if arg.discover:
-        print (ANSI_RED + "Discovering services..." + ANSI_OFF)
+        print ("Discovering services...")
 
         for d in devices:
             if not d.connectable:
