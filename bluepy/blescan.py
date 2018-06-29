@@ -122,7 +122,7 @@ def main():
     devices = scanner.scan(arg.timeout)
 
     if arg.discover:
-        print (ANSI_RED + "Discovering services..." + ANSI_OFF)
+        print ("Discovering services...")
 
         for d in devices:
             if not d.connectable:
